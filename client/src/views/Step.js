@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import AuthWrapper from "../components/AuthWrapper";
 import Button from "../components/Button";
 import Layout from "../components/Layout";
 import TextInput from "../components/TextInput";
@@ -10,7 +11,7 @@ const steps = [
     formType: "text",
     formLabel: "e.g., John Doe",
     next: "/step/2",
-    back: "/login",
+    back: "/",
   },
   {
     title: "Step 2",
@@ -39,22 +40,24 @@ const Step = () => {
   }
 
   return (
-    <Layout>
-      <h1>{step.title}</h1>
-      <h2>{step.prompt}</h2>
+    <AuthWrapper>
+      <Layout>
+        <h1>{step.title}</h1>
+        <h2>{step.prompt}</h2>
 
-      <TextInput type={step.formType} label={step.formLabel} />
+        <TextInput type={step.formType} label={step.formLabel} />
 
-      <div className="flex justify-center py-4">
-        <Link to={step.back}>
-          <Button className="mx-1">← Back</Button>
-        </Link>
+        <div className="flex justify-center py-4">
+          <Link to={step.back}>
+            <Button className="mx-1">← Back</Button>
+          </Link>
 
-        <Link to={step.next}>
-          <Button className="mx-1">Next →</Button>
-        </Link>
-      </div>
-    </Layout>
+          <Link to={step.next}>
+            <Button className="mx-1">Next →</Button>
+          </Link>
+        </div>
+      </Layout>
+    </AuthWrapper>
   );
 };
 
