@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Fragment } from "react";
+import { UserProvider } from "./context/UserContext";
 import Navbar from "./components/Navbar";
 import Login from "./views/Login";
 import Register from "./views/Register";
@@ -8,7 +8,7 @@ import Inside from "./views/Inside";
 
 function App() {
   return (
-    <Fragment>
+    <UserProvider>
       <Navbar />
 
       <Routes>
@@ -18,7 +18,7 @@ function App() {
         <Route path="/step/:number" element={<Step />} />
         <Route path="/home" element={<Inside />} />
       </Routes>
-    </Fragment>
+    </UserProvider>
   );
 }
 
