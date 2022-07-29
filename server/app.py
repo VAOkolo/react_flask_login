@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from datetime import datetime, timedelta
@@ -8,11 +9,18 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
  
+app = Flask(__name__)
+
+CORS(app)
+cors = CORS(app, resource={
+    r"/*":{
+        "origins":"*"
+    }
+})
+
 load_dotenv()
 env_path = Path(".")/".env"
 load_dotenv(dotenv_path=env_path)
-
-app = Flask(__name__)
 
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
@@ -110,6 +118,21 @@ def register():
 		return make_response("Successfully registered.", 201) # resource created
 	else:
 		return make_response("User already exists.", 409) # conflict
+
+@app.route("/user", methods=["GET"])
+@token_required
+def get_user(current_user):
+	user = User.query.filter_by(username=current_user.username).first()
+
+	if not user:
+		return make_response("User not found.", 202)
+	
+	return make_response(jsonify({
+		"username": user.username,
+		"full_name": user.full_name,
+		"age": user.age,
+		"favorite_color": user.favorite_color
+	}), 200)
 
 @app.route("/user", methods=["PATCH"])
 @token_required
