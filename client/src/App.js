@@ -1,14 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import { Fragment } from "react";
+import Navbar from "./components/Navbar";
 import Login from "./views/Login";
 
 function App() {
   return (
-    <Layout>
+    <Fragment>
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<Login />} />
       </Routes>
-    </Layout>
+    </Fragment>
   );
 }
 
