@@ -47,12 +47,13 @@ const StepContent = ({ step, previousStep }) => {
           type={step.formType}
           label={step.formLabel}
           onChange={(e) => setInput(e.target.value)}
+          autoFocus
         />
 
         {error ? <p className="text-red-700">An error has occurred.</p> : null}
 
         <div className="flex justify-center py-4">
-          <Button className="mx-1" onClick={handleBackPress}>
+          <Button type="button" className="mx-1" onClick={handleBackPress}>
             {pending ? <Spinner className="w-4 h-4" /> : null} ← Back
           </Button>
 
