@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
 import Navbar from "./components/Navbar";
 import Login from "./views/Login";
+import Logout from "./views/Logout";
 import Register from "./views/Register";
 import Step from "./views/Step";
 import Inside from "./views/Inside";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/step" element={<Navigate to="/step/1" />} />
         <Route path="/step/:number" element={<Step />} />
         <Route path="/home" element={<Inside />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </UserProvider>
   );
