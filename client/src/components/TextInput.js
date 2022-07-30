@@ -1,8 +1,11 @@
-const TextInput = (props) => {
+import { forwardRef } from "react";
+
+const TextInput = forwardRef((props, ref) => {
   return (
     <div className="form-floating mb-3 w-full">
       <input
         {...props}
+        ref={ref}
         className="form-control
           block
           w-full
@@ -29,6 +32,6 @@ const TextInput = (props) => {
       </label>
     </div>
   );
-};
+});
 
 export default TextInput;
