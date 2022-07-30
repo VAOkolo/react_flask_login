@@ -29,8 +29,38 @@ export const login = async (user) => {
 export const getUser = async () => {
   try {
     const res = await axios.get(`${baseURL}/user`);
-    return { success: true, data: res.data };
+    return { success: true, data: toCamelCase(res.data) };
   } catch (error) {
     return { success: false, error: error.response.data };
   }
+};
+
+export const updateUser = async (data) => {
+  try {
+    const res = await axios.patch(`${baseURL}/user`, {
+      full_name: data.fullName,
+      age: data.age,
+      favorite_color: data.favoriteColor,
+    });
+
+    return { success: true, data: toCamelCase(res.data) };
+  } catch (error) {
+    return { success: false, error: error.response.data };
+  }
+};
+
+// Change object keys from snake_case to camelCase
+const toCamelCase = (obj) => {
+  const newObj = {};
+
+  Object.keys(obj).forEach((key) => {
+    const newKey = key
+      .split("_")
+      .map((word, i) => (i > 0 ? word[0].toUpperCase() + word.slice(1) : word))
+      .join("");
+
+    newObj[newKey] = obj[key];
+  });
+
+  return newObj;
 };
