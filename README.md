@@ -1,50 +1,42 @@
-# Full-stack Test Project
+# Full-Stack Registration, Login, and Onboarding Demo
 
-Create a simple registration website with state management.
+Simple implementation of a web app with registration, login, and a series of onboarding steps that have to be completed in order.
 
-## Objectives
+## Tech Stack
 
-- Implement a simple registration website complete with a frontend and backend.
-
-- The website must have at least six sections: Register, Login, Step1, Step2, Step3, and Inside.
-
-- On first visit, the user must start at Login. They can choose to Login or Register at this stage.
-
-- If they Register, they should be able to create a new user by entering their preferred username and password
-in the Register form. Once successful, they should be redirected to Step1. If they login, they should be Inside.
-
-- Step1, Step2, and Step3 are forms with at least one input. They are consecutive and mandatory,
-i.e. users must not be able to go to Step2 without completing Step1.
-
-- At any point of the steps, the user can go back and forth, or logout.
-If they log back in, they should be at the **uncompleted** stage.
-
-- The Inside section should show all the user inputs in the steps.
-
-## Specification
-
-**Frontend/Design**: up to you
-**Backend**: as long as it's python
+**Frontend**: React, Tailwind
+**Backend**: Flask (Python)
 **Database**: SQLite
 
-## Delivery
-### Working website
-You can deliver the project in a number of ways:
-- Hosted. You can serve the website yourself on your domain or on any
-free hosting site. (Firebase or Netlify for frontend) (AWS/GCP free tier or Deta for backend)
+## Running Locally
 
-- Docker image. You can give us a link to your image that runs the whole stack from Dockerhub
-or via email.
+After cloning the repo, `cd` into the root folder and install dependencies.
 
-- Docker compose.
+```bash
+# from root
+cd client
+npm i
+cd ..
+cd server
+pip install -r requirements.txt
+```
 
-- README.md - You can also just give us instructions on how to run the source code on our side.
+Then, start both client and server.
 
-### Source code
-- You can send the project's repository links (frontend and backend) if it's public or add us as collaborator.
+```bash
+# from root
+npm --prefix client run start &
+cd server
+source venv/bin/activate # activate virtual env
+python -c 'from app import db; db.create_all()' # create the database
+export FLASK_ENV=development
+flask run
 
+```
 
-## Extra
-**Design**: plus points
-**Unit tests**: plus points
-**Coverage**: plus points
+Or, simply run the following scripts:
+
+```bash
+bash install.sh # install dependencies
+bash start.sh # start in dev mode
+```
