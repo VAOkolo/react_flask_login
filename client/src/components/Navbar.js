@@ -32,7 +32,7 @@ const Navbar = () => {
             </a>
           ) : (
             <div>
-              <span className="font-bold mr-6">{user.username}</span>
+              User: <span className="font-bold mr-6">{user.username}</span>
               <a className="nav-link active" href="/logout">
                 Log Out
               </a>
