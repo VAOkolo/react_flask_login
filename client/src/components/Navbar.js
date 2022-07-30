@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="relative
+        className="fixed
         w-full 
         flex 
         flex-wrap 

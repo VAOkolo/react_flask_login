@@ -15,18 +15,20 @@ const Inside = () => {
   return (
     <AuthWrapper>
       <Layout>
-        <h1>Welcome inside!</h1>
+        <h1>Welcome inside, {user.username}!</h1>
 
-        {user
-          ? steps.map(({ key, description }) => {
+        {user ? (
+          <div>
+            {steps.map(({ key, description }) => {
               return (
-                <div key={key}>
-                  <h2>{description}</h2>
-                  <p className="text-6xl font-light">{user[key]}</p>
+                <div key={key} className="my-8">
+                  <h2 className="my-4">{description}:</h2>
+                  <div className="text-4xl font-light">{user[key]}</div>
                 </div>
               );
-            })
-          : null}
+            })}
+          </div>
+        ) : null}
       </Layout>
     </AuthWrapper>
   );

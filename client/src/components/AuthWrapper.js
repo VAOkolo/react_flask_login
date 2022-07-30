@@ -10,7 +10,7 @@ const AuthWrapper = ({ children }) => {
   switch (true) {
     case pending:
       return (
-        <Layout className="h-[90vh]">
+        <Layout>
           <div className="h-[100%] flex justify-center items-center">
             <Spinner className="w-12 h-12" />
           </div>
