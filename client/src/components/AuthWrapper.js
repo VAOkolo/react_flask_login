@@ -7,22 +7,23 @@ import Spinner from "./Spinner";
 const AuthWrapper = ({ children }) => {
   const { pending, user } = useUserContext();
 
-  if (pending) {
-    return (
-      <Layout className="h-[90vh]">
-        <div className="h-[100%] flex justify-center items-center">
-          <Spinner className="w-12 h-12" />
-        </div>
-      </Layout>
-    );
-  }
+  switch (true) {
+    case pending:
+      return (
+        <Layout className="h-[90vh]">
+          <div className="h-[100%] flex justify-center items-center">
+            <Spinner className="w-12 h-12" />
+          </div>
+        </Layout>
+      );
 
-  if (!pending && !user) {
-    return <Navigate to="/" />;
-  }
+    case !pending && !user.username:
+      return <Navigate to="/" />;
 
-  // Not pending and has user:
-  return children;
+    // Not pending and has username:
+    default:
+      return children;
+  }
 };
 
 export default AuthWrapper;

@@ -42,15 +42,15 @@ const Register = () => {
   }, [username, password, setUser]);
 
   useEffect(() => {
-    // If succesfully registered,
-    // immediately try to log user in.
+    // If succesfully registered, immediately try to log user in.
     if (registered) {
       verifyUser();
     }
   }, [registered, verifyUser]);
 
   useEffect(() => {
-    if (registered && user) {
+    // Navigate to step 1 after user has been verified.
+    if (registered && user.username) {
       navigate("/step/1");
     }
   }, [user, registered, navigate]);
