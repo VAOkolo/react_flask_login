@@ -1,46 +1,16 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useUserContext } from "../context/UserContext";
 import AuthWrapper from "../components/AuthWrapper";
 import Layout from "../components/Layout";
-import { useUserContext } from "../context/UserContext";
-
-const userInfo = [
-  {
-    key: "fullName",
-    label: "Your Full Name",
-  },
-  {
-    key: "age",
-    label: "Your Age",
-  },
-  {
-    key: "favoriteColor",
-    label: "Your Favorite Color",
-  },
-];
+import { steps } from "./Steps";
 
 const Inside = () => {
   const { user } = useUserContext();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    switch (true) {
-      case user && !user.fullName:
-        navigate("/step/1");
-        break;
-
-      case user && !user.age:
-        navigate("/step/2");
-        break;
-
-      case user && !user.favoriteColor:
-        navigate("/step/3");
-        break;
-
-      default:
-        return;
-    }
-  }, [user, navigate]);
+  // Check if any steps have not yet been completed.
+  if (steps.some((step) => !user[step.key])) {
+    return <Navigate to="/steps" />;
+  }
 
   return (
     <AuthWrapper>
@@ -48,11 +18,11 @@ const Inside = () => {
         <h1>Welcome inside!</h1>
 
         {user
-          ? userInfo.map((info) => {
+          ? steps.map(({ key, description }) => {
               return (
-                <div key={info.key}>
-                  <h2>{info.label}</h2>
-                  <p className="text-6xl font-light">{user[info.key]}</p>
+                <div key={key}>
+                  <h2>{description}</h2>
+                  <p className="text-6xl font-light">{user[key]}</p>
                 </div>
               );
             })

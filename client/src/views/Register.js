@@ -51,7 +51,7 @@ const Register = () => {
   useEffect(() => {
     // Navigate to step 1 after user has been verified.
     if (registered && user.username) {
-      navigate("/step/1");
+      navigate("/steps");
     }
   }, [user, registered, navigate]);
 
