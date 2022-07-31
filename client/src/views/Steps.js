@@ -32,14 +32,18 @@ export const steps = [
   },
 ];
 
-// View that controls which step to display on screen.
+// View that controls which step to show on screen.
 const Steps = () => {
   const { user } = useUserContext();
   const [stepIndex, setStepIndex] = useState(0);
+  // Cache for last submitted input so that it can be redisplayed
+  // when the user chooses to go back a step:
+  const [cachedInput, setCachedInput] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if all steps have already been completed.
+    // Check if all steps have already been completed, i.e.,
+    // the corresponding user properties are all truthy.
     if (steps.every((step) => user[step.key])) {
       navigate("/home");
     }
@@ -60,6 +64,8 @@ const Steps = () => {
         <StepContent
           step={steps[stepIndex]}
           previousStep={steps[stepIndex - 1]}
+          cachedInput={cachedInput}
+          setCachedInput={setCachedInput}
         />
       </Layout>
     </AuthWrapper>

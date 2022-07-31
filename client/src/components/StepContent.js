@@ -5,7 +5,7 @@ import TextInput from "./TextInput";
 import Button from "./Button";
 import Spinner from "./Spinner";
 
-const StepContent = ({ step, previousStep }) => {
+const StepContent = ({ step, previousStep, cachedInput, setCachedInput }) => {
   const { pending, error, user, updateUser } = useUserContext();
   const [input, setInput] = useState("");
 
@@ -14,6 +14,7 @@ const StepContent = ({ step, previousStep }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setCachedInput("");
     updateUser({ [step.key]: input });
   };
 
@@ -21,7 +22,9 @@ const StepContent = ({ step, previousStep }) => {
     e.preventDefault();
 
     if (previousStep) {
-      // Remove submitted data from previous step.
+      // Cache submitted data from previous step before setting to null
+      // in user object to prompt parent component to switch steps.
+      setCachedInput(user[previousStep.key]);
       updateUser({ [previousStep.key]: null });
     } else {
       navigate("/logout");
@@ -29,12 +32,23 @@ const StepContent = ({ step, previousStep }) => {
   };
 
   useEffect(() => {
-    if (user.username && inputRef.current) {
-      // Set any previously saved value to input form.
-      inputRef.current.value = user[step.key];
-      setInput(user[step.key]);
+    // Check if current form can accept the input type.
+    const typesMatch = (formType, input) => {
+      if (formType === "text" && typeof input === "string") {
+        return true;
+      } else {
+        return formType === typeof input;
+      }
+    };
+
+    if (inputRef.current && typesMatch(step.formType, cachedInput)) {
+      // Set previously saved value to input form if the
+      // step is loaded as a result of pressing back.
+      // The data is considered not saved until pressing next.
+      inputRef.current.value = cachedInput;
+      setInput(cachedInput);
     }
-  }, [user, step]);
+  }, [step, cachedInput]);
 
   return (
     <Fragment>
