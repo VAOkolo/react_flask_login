@@ -21,7 +21,6 @@ const initialUser = {
 export const UserProvider = ({ children }) => {
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(false);
-
   const [user, dispatch] = useReducer(userReducer, initialUser);
 
   const setUser = async (token) => {
@@ -41,16 +40,12 @@ export const UserProvider = ({ children }) => {
     setPending(false);
   };
 
-  const updateUser = async (data, onSuccess = () => true) => {
+  const updateUser = async (data) => {
     setPending(true);
     const res = await api.updateUser(data);
     setError(!res.success);
     dispatch(actions.setUserData(res.data));
     setPending(false);
-
-    if (res.success) {
-      onSuccess();
-    }
   };
 
   useEffect(() => {
