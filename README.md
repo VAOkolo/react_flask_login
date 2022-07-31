@@ -2,11 +2,17 @@
 
 Simple implementation of a web app with registration, login, and a series of onboarding steps that have to be completed in order.
 
+## Features
+- Login screen.
+- Registration screen and automatic login after registration.
+- 3 onboarding steps which have to be completed in order. While uncompleted, the user can go back and forth between steps at any time. If a user leaves and logs back in, the user is taken to the uncompleted step.
+- Home screen, accessible only after completing all steps.
+
 ## Tech Stack
 
-**Frontend**: React, Tailwind
-**Backend**: Flask (Python)
-**Database**: SQLite
+- **Frontend**: React, Tailwind
+- **Backend**: Flask (Python)
+- **Database**: SQLite
 
 ## Running Locally
 
@@ -46,3 +52,7 @@ bash start.sh # start in dev mode
 
 ## Env variables
 For the purposes of this exercise, environment variables are included in the repo.
+
+## References
+
+- [Using JWT for user authentication in Flask](https://www.geeksforgeeks.org/using-jwt-for-user-authentication-in-flask/)
