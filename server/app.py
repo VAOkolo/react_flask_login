@@ -116,35 +116,21 @@ def register():
     else:
         return make_response("User already exists.", 409) # conflict
 
-@app.route("/user", methods=["GET"])
+@app.route("/user", methods=["GET", "PATCH"])
 @token_required
-def get_user(current_user):
+def update_and_get_user(current_user):
     user = User.query.filter_by(username=current_user.username).first()
-
-    if not user:
-        return make_response("User not found.", 202)
     
-    return make_response(jsonify({
-        "username": user.username,
-        "full_name": user.full_name,
-        "age": user.age,
-        "favorite_color": user.favorite_color
-    }), 200)
-
-@app.route("/user", methods=["PATCH"])
-@token_required
-def update_user(current_user):
-    body = request.get_json()
-    user = User.query.filter_by(username=current_user.username).first()
-
     if not user:
-        return make_response("User not found.", 202)
+        return make_response("User not found.", 202) # accepted
 
-    for key, value in body.items():
-        if key != "username" and key != "password":
-            setattr(user, key, value)
+    if request.method == "PATCH":
+        body = request.get_json()
+        for key, value in body.items():
+            if key != "username" and key != "password":
+                setattr(user, key, value)
 
-    db.session.commit()
+        db.session.commit()
 
     return make_response(jsonify({
         "username": user.username,
